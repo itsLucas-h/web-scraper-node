@@ -8,8 +8,12 @@ const scrape = async () => {
 
   await page.goto(url);
 
-  const title = await page.title();
-  console.log(`Page Title: ${title}`);
+  const books = await page.evaluate(() => {
+    const bookElements = document.querySelectorAll(".product_pod");
+    return bookElements;
+  });
+
+  console.log(books);
 
   await browser.close();
 };
