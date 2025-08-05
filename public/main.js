@@ -9,6 +9,7 @@ async function runScraper() {
 
   status.textContent = "Fetching book data...";
   output.textContent = "";
+  output.classList.add("hidden");
   spinner.classList.remove("hidden");
   downloadBtn.classList.add("hidden");
   scrapedData = [];
@@ -29,9 +30,12 @@ async function runScraper() {
       status.textContent = "Response is not valid JSON.";
       output.textContent = text;
     }
+
+    output.classList.remove("hidden");
   } catch (err) {
     status.textContent = "Failed to fetch data.";
     output.textContent = err.toString();
+    output.classList.remove("hidden");
   } finally {
     spinner.classList.add("hidden");
   }

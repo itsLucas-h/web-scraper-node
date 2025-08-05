@@ -1,31 +1,51 @@
 # Book Scraper with Puppeteer
 
-This project is a Node.js-based web scraper that extracts book data from [Books to Scrape](https://books.toscrape.com/), a demo site designed for practicing web scraping. The scraper uses [Puppeteer](https://pptr.dev/) to navigate the site and collect structured data including book titles, prices, availability, and star ratings across multiple pages.
+This project is a Node.js-based web scraper and user interface that extracts book data from [Books to Scrape](https://books.toscrape.com/), a demo site designed for practising web scraping. It uses [Puppeteer](https://pptr.dev/) to automate data extraction and provides a browser-based UI to trigger scraping and download the results.
+
+### Live Demo
+
+Hosted on Render: [https://web-scraper-node-zd39.onrender.com](https://web-scraper-node-zd39.onrender.com)
+
+---
 
 ## Features
 
-- Scrapes book data from the first 10 catalogue pages
-- Extracts:
+- Scrapes book data from up to 50 catalogue pages
+- Extracted data includes:
   - Title
   - Price
   - Stock availability
   - Star rating
-- Saves results to a `books.json` file
-- Logs each page’s results to the console for verification
+  - Product description
+  - Category
+  - Product UPC
+- Interactive web interface:
+  - Enter number of pages to scrape
+  - Start scraping with a single click
+  - Visual loading spinner during scraping
+  - Download scraped data as `books.json`
+- JSON output displayed in-browser
 
-## Output Example
+---
+
+## Example Output
 
 ```json
 [
   {
     "title": "A Light in the Attic",
     "price": "£51.77",
-    "stock": "In Stock",
-    "rating": "Three"
-  },
-  ...
+    "stock": "In stock",
+    "rating": "Three",
+    "link": "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html",
+    "description": "It's hard to imagine a world without A Light in the Attic...",
+    "upc": "a897fe39b1053632",
+    "category": "Poetry"
+  }
 ]
 ```
+
+---
 
 ## Getting Started
 
@@ -49,36 +69,60 @@ This project is a Node.js-based web scraper that extracts book data from [Books 
    npm install
    ```
 
-## Usage
+3. Start the server:
 
-Run the scraper with:
+   ```bash
+   node server.js
+   ```
 
-```bash
-node scrape.js
+4. Open your browser:
+
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## Project Structure
+
+```
+web-scraper-node/
+├── data/               # Stores scraped data like books.json
+├── public/             # Static frontend assets
+│   ├── index.html      # Main UI
+│   ├── main.js         # Scraper trigger and download logic
+│   └── style.css       # Styling
+├── scripts/
+│   └── scrape.js       # Puppeteer scraper logic
+├── server.js           # Express server and /scrape API endpoint
+├── package.json        # Project metadata and dependencies
+└── README.md
 ```
 
-After execution, a file named `books.json` will be created in the root directory containing the extracted book data.
+---
 
 ## How It Works
 
-- The script uses Puppeteer to open a headless browser.
-- It loops through the first 10 pages of the catalogue.
-- On each page, it selects all book containers using the `.product_pod` class.
-- From each book, it extracts:
-  - The title from the `title` attribute
-  - The price from `.price_color`
-  - The stock status from `.instock.availability`
-  - The rating from the `.star-rating` class
-- The data is stored in an array and then saved to a JSON file.
+- `server.js` sets up an Express server and serves the frontend UI.
+- When you click **"Run Scraper"**, it makes a request to `/scrape?pages=N`.
+- `scripts/scrape.js` uses Puppeteer to scrape the specified number of pages.
+- The result is returned to the browser and shown in a readable JSON format.
+- The **Download JSON** button lets you save the results locally.
+
+---
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
+---
+
 ## Author
 
-Lucas H.  
+**Lucas H.**  
 [GitHub Profile](https://github.com/itsLucas-h)
+
+---
 
 ## Disclaimer
 
