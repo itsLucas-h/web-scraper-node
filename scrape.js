@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import fs from "fs";
 
 const scrape = async () => {
   const browser = await puppeteer.launch();
@@ -28,7 +29,9 @@ const scrape = async () => {
     });
   });
 
-  console.log(books);
+  fs.writeFileSync("books.json", JSON.stringify(books, null, 2));
+
+  console.log("Data saved to books.json");
 
   await browser.close();
 };
