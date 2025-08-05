@@ -10,7 +10,10 @@ const scrape = async () => {
 
   const books = await page.evaluate(() => {
     const bookElements = document.querySelectorAll(".product_pod");
-    return bookElements;
+    return Array.from(bookElements).map((book) => {
+      const title = book.querySelector("h3 a").getAttribute("title");
+      return title;
+    });
   });
 
   console.log(books);
